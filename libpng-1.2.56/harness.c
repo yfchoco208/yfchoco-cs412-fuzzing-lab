@@ -103,7 +103,22 @@ int main(int argc, char **argv) {
         return 0;
     }
 
-    png_bytep *row_pointers = malloc(sizeof(png_bytep) * height);
+    /* 
+    Intentionally put a bug so it crashes for some input
+    malloc(sizeof(png_bytep) * (height)-1) to create off-by-one in row_pointer 
+    => for the last row (row height) it crashes
+    Make it conditioned on the height value and color type, if the height is above threshold, 
+    make it allocate less (try to minimize allocation)
+    */
+    png_bytep *row_pointers = NULL;
+
+    if (height > 300 && color_type == 4) {
+        row_pointers = malloc(sizeof(png_bytep) * (height-1));
+    }
+    else {
+        row_pointers = malloc(sizeof(png_bytep) * height);
+    }
+    
     if (!row_pointers) {
         fclose(fp);
         png_destroy_read_struct(&png, &info, NULL);
