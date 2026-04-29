@@ -1,4 +1,4 @@
-prefix=/fuzzing/libpng-1.2.56/install_vanilla
+prefix=/fuzzing/libpng-1.2.56/install_nosan
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include/libpng12
