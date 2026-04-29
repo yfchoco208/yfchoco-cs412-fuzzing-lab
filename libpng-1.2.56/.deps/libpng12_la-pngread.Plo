@@ -1,5 +1,6 @@
-libpng12_la-pngread.lo: pngread.c png.h /usr/include/zlib.h \
-  /usr/include/zconf.h \
+libpng12_la-pngread.lo: \
+  /usr/lib/llvm-14/lib/clang/14.0.0/share/asan_ignorelist.txt pngread.c \
+  png.h /usr/include/zlib.h /usr/include/zconf.h \
   /usr/lib/llvm-14/lib/clang/14.0.0/include/stddef.h \
   /usr/lib/llvm-14/lib/clang/14.0.0/include/__stddef_max_align_t.h \
   /usr/lib/llvm-14/lib/clang/14.0.0/include/limits.h \
@@ -81,6 +82,8 @@ libpng12_la-pngread.lo: pngread.c png.h /usr/include/zlib.h \
   /usr/include/aarch64-linux-gnu/bits/time.h \
   /usr/include/aarch64-linux-gnu/bits/types/struct_tm.h \
   /usr/include/aarch64-linux-gnu/bits/types/struct_itimerspec.h
+
+/usr/lib/llvm-14/lib/clang/14.0.0/share/asan_ignorelist.txt:
 
 png.h:
 

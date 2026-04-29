@@ -464,7 +464,7 @@ AUTOMAKE = ${SHELL} /fuzzing/libpng-1.2.56/missing automake-1.15
 AWK = mawk
 CC = afl-clang-fast
 CCDEPMODE = depmode=gcc3
-CFLAGS = -g -O1
+CFLAGS = -fsanitize=address -g -O1
 CPP = afl-clang-fast -E
 CPPFLAGS = 
 CYGPATH_W = echo
@@ -486,11 +486,11 @@ INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LD = /usr/bin/ld
-LDFLAGS = 
+LDFLAGS = -fsanitize=address
 LIBOBJS = 
 LIBPNG_DEFINES = -DPNG_CONFIGURE_LIBPNG 
 LIBPNG_NO_MMX = 
-LIBS = -lz -lm 
+LIBS = -lz 
 LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
@@ -575,7 +575,7 @@ pdfdir = ${docdir}
 # pkg-config stuff, note that libpng.pc is always required in order
 # to get the correct library
 pkgconfigdir = ${libdir}/pkgconfig
-prefix = /fuzzing/libpng-1.2.56/install_nosan
+prefix = /fuzzing/libpng-1.2.56/install
 program_transform_name = s,x,x,
 psdir = ${docdir}
 sbindir = ${exec_prefix}/sbin
