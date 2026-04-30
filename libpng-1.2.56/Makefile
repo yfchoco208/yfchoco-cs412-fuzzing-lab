@@ -462,10 +462,10 @@ AUTOCONF = ${SHELL} /fuzzing/libpng-1.2.56/missing autoconf
 AUTOHEADER = ${SHELL} /fuzzing/libpng-1.2.56/missing autoheader
 AUTOMAKE = ${SHELL} /fuzzing/libpng-1.2.56/missing automake-1.15
 AWK = mawk
-CC = gcc
+CC = afl-clang-fast
 CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O1
-CPP = gcc -E
+CPP = afl-clang-fast -E
 CPPFLAGS = 
 CYGPATH_W = echo
 DEFS = -DHAVE_CONFIG_H
@@ -531,7 +531,7 @@ abs_srcdir = /fuzzing/libpng-1.2.56
 abs_top_builddir = /fuzzing/libpng-1.2.56
 abs_top_srcdir = /fuzzing/libpng-1.2.56
 ac_ct_AR = ar
-ac_ct_CC = gcc
+ac_ct_CC = afl-clang-fast
 ac_ct_DUMPBIN = 
 am__include = include
 am__leading_dot = .
@@ -575,7 +575,7 @@ pdfdir = ${docdir}
 # pkg-config stuff, note that libpng.pc is always required in order
 # to get the correct library
 pkgconfigdir = ${libdir}/pkgconfig
-prefix = /fuzzing/libpng-1.2.56/install_vanilla
+prefix = /fuzzing/libpng-1.2.56/install_no
 program_transform_name = s,x,x,
 psdir = ${docdir}
 sbindir = ${exec_prefix}/sbin
