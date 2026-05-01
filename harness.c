@@ -87,6 +87,13 @@ int main(int argc, char **argv) {
         return 0;
     }
 
+    /* 
+    Known vulnerability: buf overflow in png_get_PLTE() 
+    */
+    png_colorp palette = NULL;
+    int num_palette = 0;
+    png_get_PLTE(png, info, &palette, &num_palette);
+
     /* Apply transformation */
     png_set_expand(png); /* palette -> RGB */
     png_set_strip_16(png); /* 16-bit -> 8-bit */
