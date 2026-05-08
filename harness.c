@@ -126,7 +126,7 @@ int main(int argc, char **argv) {
         row_pointers = malloc(sizeof(png_bytep) * height);
     }
     */
-
+    
     png_bytep *row_pointers = malloc(sizeof(png_bytep) * height);
     
     if (!row_pointers) {

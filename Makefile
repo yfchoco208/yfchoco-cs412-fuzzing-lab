@@ -17,10 +17,12 @@ LIBPNG_DIR = libpng-1.2.53
 
 SRCS = harness.c
 SRCS_PER = harness_persistent.c
+SRCS_BUG = harness_bug.c
 
 AFL_TARGET = png_fuzz
 QEMU_TARGET = png_fuzz_qemu
 AFL_PER_TARGET = png_fuzz_persistent
+AFL_BUG_TARGET = png_fuzz_bug
 
 #SEEDS_DIR = seeds
 SEEDS_DIR = seeds_relevant
@@ -37,13 +39,14 @@ AFL_FUZZ_OUT = findings
 QEMU_FUZZ_OUT = findings-qemu
 #AFL_PER_FUZZ_OUT = findings-per-test
 AFL_PER_FUZZ_OUT = findings-per
+AFL_FUZZ_BUG_OUT = findings-bug
 
 EXTRAS = -lpng12 -lz -lm
 
 # Fuzzing with AFL++ and NO ASan 
 AFL_NO_TARGET = png_fuzz_no
-AFL_NO_FUZZ_OUT = findings-no-test
-# AFL_NO_FUZZ_OUT = findings-no
+#AFL_NO_FUZZ_OUT = findings-no-test
+AFL_NO_FUZZ_OUT = findings-no
 AFL_NO_CFLAGS = -g -O1
 AFL_NO_INCDIR = -I$(LIBPNG_DIR)/install_no/include
 AFL_NO_LIBDIR = -L$(LIBPNG_DIR)/install_no/lib
@@ -53,7 +56,7 @@ AFL_NO_LIBDIR = -L$(LIBPNG_DIR)/install_no/lib
 # libpng might be a directory so call PHONY
 .PHONY: libpng-afl libpng-qemu harness-afl harness-qemu fuzz-afl fuzz-qemu \
 harness-afl-per fuzz-afl-per libpng-afl-no harness-afl-no fuzz-afl-no \
-clean-test build fuzz clean #min
+harness-afl-bug fuzz-afl-bug clean-test build fuzz clean #min
 
 # Build libpng as static library with AFL++ and ASan
 libpng-afl:
@@ -97,6 +100,9 @@ harness-afl-per:
 harness-afl-no:
 	$(AFL_CC) $(SRCS) $(AFL_NO_INCDIR) $(AFL_NO_LIBDIR) $(EXTRAS) $(AFL_NO_CFLAGS) -o $(AFL_NO_TARGET)
 
+harness-afl-bug:
+	$(AFL_CC) $(SRCS_BUG) $(AFL_INCDIR) $(AFL_LIBDIR) $(EXTRAS) $(AFL_CFLAGS) -o $(AFL_BUG_TARGET)
+
 # Already minimized and provided as seed
 # min: 
 # $(MIN_CC) -i $(LIBPNG_DIR)/seeds_original/ -o minimized/ -- ./$(TARGET_H) @@
@@ -113,13 +119,16 @@ fuzz-afl-per:
 fuzz-afl-no:
 	$(FUZZ_CC) -i $(SEEDS_DIR) -o $(AFL_NO_FUZZ_OUT) -x png.dict -- ./$(AFL_NO_TARGET) @@
 
+fuzz-afl-bug:
+	$(FUZZ_CC) -i $(SEEDS_DIR) -o $(AFL_FUZZ_BUG_OUT) -x png.dict -- ./$(AFL_BUG_TARGET) @@
+
 clean:
-	rm -f $(AFL_TARGET) $(QEMU_TARGET) $(AFL_PER_TARGET) $(AFL_NO_TARGET)
+	rm -f $(AFL_TARGET) $(QEMU_TARGET) $(AFL_PER_TARGET) $(AFL_NO_TARGET) $(AFL_BUG_TARGET)
 
 clean-test:
 	rm -rf findings-test findings-qemu-test findings-per-test findings-no-test
 
 # build, run/fuzz, clean required as mentioned in handout
 build: libpng-afl harness-afl libpng-qemu harness-qemu harness-afl-per \
-libpng-afl-no harness-afl-no
+libpng-afl-no harness-afl-no harness-afl-bug
 fuzz: fuzz-afl

@@ -1,6 +1,6 @@
 Command line used to find this crash:
 
-afl-fuzz -i seeds -o findings-bug -x png.dict -- ./png_fuzz @@
+afl-fuzz -i seeds_relevant -o findings-bug -x png.dict -- ./png_fuzz_bug @@
 
 If you can't reproduce a bug outside of afl-fuzz, be sure to set the same
 memory limit. The limit used for this fuzzing session was 0 B.
