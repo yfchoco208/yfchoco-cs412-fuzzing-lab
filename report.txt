@@ -1,0 +1,32 @@
+GitHub repository for the project:
+https://github.com/yfchoco208/yfchoco-cs412-fuzzing-lab
+
+The repository contains the following files/subdirectories:
+
+- Dockerfile
+- Makefile
+- report.pdf
+- report.txt
+
+- harness.c: Main harness for AFL++ with ASan.
+- harness_persistent.c: Harness for ASan + persistent mode.
+- harness_bug.c: Harness with an injected synthetic bug.
+
+- libpng-1.2.53/: Target libpng 
+- png.dict: PNG dictionary 
+- seeds/: Original seed 
+- seeds_relevant/: Filtered seed corpus containing palette-color PNGs with small bit depths.
+
+- findings/: Findings from AFL++ with ASan.
+- findings-qemu/: Findings from QEMU-mode fuzzing.
+- findings-per/: Findings from ASan and persistent mode. findings-per/default/fuzzer_stats is referenced in Q8.
+- findings-bug/: Findings from fuzzing the synthetic bug harness. findings-bug/default/fuzzer_stats is referenced in Q5.
+
+- plot_output/: AFL++ plot output for the AFL++/ASan campaign.
+- plot_output_qemu/: AFL++ plot output for the QEMU campaign.
+- plot_output_bug/: AFL++ plot output for the synthetic-bug campaign.
+
+- status_screen/: AFL++ status screen screenshots used in the report.
+- SkPngCodec.cpp: Skia PNG decoding source file used for Attack Surface Analysis.
+- patches/: No patches are made
+- Others: Other files generated while working on the project (not required for the final output)

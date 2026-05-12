@@ -33,11 +33,8 @@ AFL_LIBDIR = -L$(LIBPNG_DIR)/install/lib
 QEMU_INCDIR = -I$(LIBPNG_DIR)/install_vanilla/include
 QEMU_LIBDIR = -L$(LIBPNG_DIR)/install_vanilla/lib
 
-#AFL_FUZZ_OUT = findings-test
 AFL_FUZZ_OUT = findings
-#QEMU_FUZZ_OUT = findings-qemu-test
 QEMU_FUZZ_OUT = findings-qemu
-#AFL_PER_FUZZ_OUT = findings-per-test
 AFL_PER_FUZZ_OUT = findings-per
 AFL_FUZZ_BUG_OUT = findings-bug
 
@@ -45,7 +42,6 @@ EXTRAS = -lpng12 -lz -lm
 
 # Fuzzing with AFL++ and NO ASan 
 AFL_NO_TARGET = png_fuzz_no
-#AFL_NO_FUZZ_OUT = findings-no-test
 AFL_NO_FUZZ_OUT = findings-no
 AFL_NO_CFLAGS = -g -O1
 AFL_NO_INCDIR = -I$(LIBPNG_DIR)/install_no/include
@@ -56,7 +52,7 @@ AFL_NO_LIBDIR = -L$(LIBPNG_DIR)/install_no/lib
 # libpng might be a directory so call PHONY
 .PHONY: libpng-afl libpng-qemu harness-afl harness-qemu fuzz-afl fuzz-qemu \
 harness-afl-per fuzz-afl-per libpng-afl-no harness-afl-no fuzz-afl-no \
-harness-afl-bug fuzz-afl-bug clean-test build fuzz clean #min
+harness-afl-bug fuzz-afl-bug clean-test build fuzz clean 
 
 # Build libpng as static library with AFL++ and ASan
 libpng-afl:
@@ -102,10 +98,6 @@ harness-afl-no:
 
 harness-afl-bug:
 	$(AFL_CC) $(SRCS_BUG) $(AFL_INCDIR) $(AFL_LIBDIR) $(EXTRAS) $(AFL_CFLAGS) -o $(AFL_BUG_TARGET)
-
-# Already minimized and provided as seed
-# min: 
-# $(MIN_CC) -i $(LIBPNG_DIR)/seeds_original/ -o minimized/ -- ./$(TARGET_H) @@
 
 fuzz-afl:
 	$(FUZZ_CC) -i $(SEEDS_DIR) -o $(AFL_FUZZ_OUT) -x png.dict -- ./$(AFL_TARGET) @@
